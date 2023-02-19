@@ -21,7 +21,7 @@
 
 */
 
-class ScrollAnimationHandler{
+export default class ScrollAnimationHandler{
     thresholdStart;    
     thresholdEnd;
     animationType;
@@ -112,6 +112,3 @@ class ScrollAnimationHandler{
         })
     }
 }
-
-
-export default ScrollAnimationHandler;

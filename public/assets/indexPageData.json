@@ -1,0 +1,63 @@
+{
+  "projects":[
+    {
+      "title":"ThingsDash",
+      "desc":"An app for visualizing internet of things devices in various areas",
+      "img":"assets/images/pictures_frontpage/ThingsDash.png",
+      "link":"https://github.com/sebastianttr/ThingsDash"
+    },
+    {
+      "title":"Mecanum Wheel Robot",
+      "desc":"A robot with mecanum wheels able to move in any direction.",
+      "img":"assets/images/pictures_frontpage/MecanumWheelRobot.png",
+      "link":""
+    },
+    {
+      "title":"Presentr",
+      "desc":"A web app for sharing live captures from remote resources",
+      "img":"assets/images/pictures_frontpage/Presentr.png",
+      "link":"https://presentr.wiredless.io/"
+    },
+    {
+      "title":"Gmail2ECM",
+      "desc":"A web app for sharing live captures from remote resources",
+      "img":"assets/images/pictures_frontpage/Gmail2ECM.png",
+      "link":"https://www.gmail2ecm.com/"
+    },
+    {
+      "title":"Room Quality Mobile/Web App",
+      "desc":"A roomquality Mobile/Web App for monitoring the Temps & CO2-Levels in classrooms",
+      "img":"assets/images/pictures_frontpage/RaumklimaAppPNG.png",
+      "link":"https://github.com/sebastianttr/raumklima_mobile_app"
+    },
+    {
+      "title":"EXOCars",
+      "desc":"A static website for buying/selling special kinds of cars",
+      "img":"assets/images/pictures_frontpage/EXOCars.png",
+      "link":"https://cc211004.students.fhstp.ac.at/iwt/index.html"
+    }
+  ],
+  "tryouts": {
+    "hello":"world"
+  },
+  "socials": [
+    {
+      "platform":"instagram",
+      "name":"@wired_less_maker",
+      "link":"https://www.instagram.com/wiredlessmaker/",
+      "img":"assets/images/instagram_logo.png"
+    },
+    {
+      "platform":"github",
+      "name":"sebastianttr",
+      "link":"https://github.com/sebastianttr",
+      "img":"assets/images/github_logo.png"
+    },
+    {
+      "platform":"",
+      "name":"LinkedIn",
+      "link":"https://www.linkedin.com/in/sebastian-tatar-a14a9b233/",
+      "img":"assets/images/linkedin.png"
+    }
+  ]
+}

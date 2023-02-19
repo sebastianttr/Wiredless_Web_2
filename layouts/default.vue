@@ -45,7 +45,7 @@ const aboutMeNavBarLinks = [
   },
   {
     title:"Imprint",
-    action:"navigateTo:/aboutme"
+    action:"navigateTo:/imprint"
   },
 ]
 
@@ -116,7 +116,9 @@ body {
 }
 
 #pageContent{ 
-  width: 100vw;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   overflow-y: hidden;
 }

@@ -28,13 +28,13 @@ export default {
 .skillSet{
   position: relative;
   overflow: hidden;
-  margin: 0.3vw;
   padding: 20px;
-  width:450px;
+  width: 450px;
   background: rgb(58, 58, 58);
-  border-radius:10px;
+  border-radius: 10px;
   cursor:default;
   filter: none;
+  color: white;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.377);
 }
 
@@ -57,7 +57,6 @@ export default {
 .skillSet:hover .skillSetStack{
   opacity: 1;
 }
-
 
 .skillSet .skillSetStack{
   position: absolute;
@@ -99,6 +98,13 @@ export default {
   color: black;
   margin-top: 4px;
   padding: 2px;
+}
+
+@media only screen and (max-width: 768px) {
+  .skillSet{
+    min-width: 80vw;
+  }
+
 }
 
 </style>

@@ -1,15 +1,15 @@
 <template>
   <div>
     <div id="main">
-      <div class="mainContent fit column wrap justify-center items-start content-center q-ml-md q-mr-md">
+      <div class="mainContent">
         <h1 class="myHeader1">Hello!</h1>
         <h1 class="myHeader2">Welcome to WiredLess</h1>
-        <div>
+        <div class="mainContentSubText">
           <span class="text-h4 mr-sm">I'm Sebastian, a</span>
           <LoopedAnimatedText
             id="animatedText"
             :titles="animatedTextContents"
-            :fontSize="'45px'"
+            :fontSize="'40px'"
             :color="'#bf360c'"
             :start="true"
             />
@@ -26,7 +26,7 @@
         :start="scrollAppearElements[0].state">
       </AnimatedText> 
       <div class="myProjectsBox scrollAppearContainer">
-        <div v-for="(project,index) in projectsList" :key="index*3000" class="myProjectCards scrollAppearItem" @click="redirect(project.link)">
+        <div v-for="(project,index) in projectsList" :key="index*3000" class="myProjectCards scrollAppearItem" @click="">
           <img :src="project.img" alt="Picture of one of my project">
           <span>
             <p class="myProjectsCardTitle">{{project.title}}</p>
@@ -81,69 +81,32 @@
         :color="'#bf360c'"
         :start="scrollAppearElements[1].state">
       </AnimatedText> 
-      <div class="flexBoxColumnCenter">
-        <div class="cardSocials" @click="redirectInsta()">
-          <img class="socials_icon" src="~/assets/images/instagram_logo.png">
-          <div>Instagram</div>
-          <div style="font-size:25px">@wired_less_maker</div>
-        </div>
-        <div class="cardSocials" @click="redirectGithub()">
-          <img class="socials_icon" src="~/assets/images/github_logo.png">
-          <div>Github</div>
-          <div style="font-size:25px">wired_less_maker</div>
+      <div class="flexBoxColumnCenter mt-md">
+        <div v-for="(social,index) in socialsList" class="cardSocials" @click="redirectTo(social.link)">
+          <img class="socials_icon" :src="social.img">
+          <div>
+            <p class="socials_platform">{{social.platform}}</p>
+            <p class="socials_name">{{social.name}}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {ref, onMounted} from "vue"
 import ScrollAnimationHandler from "~/handler/ScrollAnimationHandler";
+import AssetsLoader from "~~/handler/AssetsLoader"
+import type { Ref } from "vue";
 
-let intersectionObserver = ref(null)
-let scrollAppearHandler = ref(null)
+let intersectionObserver: Ref<any> = ref(null)
+let scrollAppearHandler: Ref<any>  = ref(null)
 
-const projectsList = ref(
-  [
-    {
-      title:"ThingsDash",
-      desc:"An app for visualizing internet of things devices in various areas",
-      img:"assets/images/pictures_frontpage/ThingsDash.png",
-      link:"https://github.com/sebastianttr/ThingsDash"
-    },
-    {
-      title:"Mecanum Wheel Robot",
-      desc:"A robot with mecanum wheels able to move in any direction.",
-      img:"assets/images/pictures_frontpage/MecanumWheelRobot.png",
-      link:""
-    },
-    {
-      title:"Presentr",
-      desc:"A web app for sharing live captures from remote resources",
-      img:"assets/images/pictures_frontpage/Presentr.png",
-      link:"https://presentr.wiredless.io/"
-    },
-    {
-      title:"Gmail2ECM",
-      desc:"A web app for sharing live captures from remote resources",
-      img:"assets/images/pictures_frontpage/Gmail2ECM.png",
-      link:"https://www.gmail2ecm.com/"
-    },
-    {
-      title:"Room Quality Mobile/Web App",
-      desc:"A roomquality Mobile/Web App for monitoring the Temps & CO2-Levels in classrooms",
-      img:"assets/images/pictures_frontpage/RaumklimaAppPNG.png",
-      link:"https://github.com/sebastianttr/raumklima_mobile_app"
-    },
-    {
-      title:"EXOCars",
-      desc:"A static website for buying/selling special kinds of cars",
-      img:"assets/images/pictures_frontpage/EXOCars.png",
-      link:"https://cc211004.students.fhstp.ac.at/iwt/index.html"
-    },
-  ]
-)
+let assetsLoader = new AssetsLoader();
+
+const projectsList: Ref<Array<any>> = ref([])
+const socialsList: Ref<Array<any>> = ref([])
 
 // load with fetch next time
 const animatedTextContents = ref([
@@ -159,32 +122,32 @@ let scrollAppearElements = ref([
     id:"projectsTitle",
     state: false
   },
-  // {
-  //   id:"tryOutsTitle",
-  //   state: false
-  // },
   {
     id:"socialsTitle",
     state: false
   },
 ])
 
-function getDOMel(id){
+function getDOMel(id: string){
   return document.getElementById(id);
 }
 
-function redirectInsta() {
-  window.location.href = "https://www.instagram.com/wired_less_maker/";
-}
-function redirectGithub() {
-  window.location.href = "https://github.com/sebastianttr";
+const redirectTo = (link: string) => {
+  window.location.href = link;
 }
 
-onMounted(() => {
+onMounted(async () => {
+  console.log("Loading assests")
+  const jsonData: any = await assetsLoader.loadFromJSON("indexPageData");
+
+  projectsList.value = jsonData.projects;
+  socialsList.value = jsonData.socials;
+
+
   intersectionObserver.value = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = 1;
+        (entry.target as HTMLElement).style.opacity = "1";
         scrollAppearElements.value.filter(item => entry.target.id == item.id)[0].state = true;
       }
     });
@@ -201,10 +164,10 @@ onMounted(() => {
 
 })
 
-const scrollToSection = (sectionId) => {
+const scrollToSection = (sectionId: string) => {
   const yOffset = -60;
-  const ele = document.getElementById(sectionId); // You need to get your element here
-  const y = ele.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  const ele: HTMLElement | null = document.getElementById(sectionId); // You need to get your element here
+  const y = ele!.getBoundingClientRect().top + window.pageYOffset + yOffset;
   window.scrollTo({ top: y, behavior: "smooth" });
 }
 
@@ -237,7 +200,7 @@ h1{
 }
 
 .text-h4 {
-  font-size:x-large;
+  font-size:1.5em;
 }
 
 #main {
@@ -283,6 +246,11 @@ h1{
   color:white;
 }
 
+.mainContentSubText{
+  display:flex;
+  align-items:flex-end;
+  flex-direction: row;
+}
 
 .projectsContent{
   display: flex;
@@ -431,7 +399,8 @@ h1{
 }
 
 #socials{
-  margin: 32px;
+  margin: 20px 0px 20px 0px;
+  width: 100vw;
 }
 
 .cardSocials:hover {
@@ -458,13 +427,13 @@ h1{
   object-fit: cover;
 }
 
+.socials_platform{
+  font-size: 1.2rem;
+}
 
-
-
-
-
-
-
+.socials_name{
+  font-size: 1.5rem;
+}
 
 @media only screen and (max-width: 768px) {
   .card {
@@ -476,7 +445,7 @@ h1{
   }
 
   .cardSocials {
-    width: 100%;
+    width: 80vw;
   }
 
   .contentViewPicture {
@@ -485,8 +454,14 @@ h1{
     background-color: white;
   }
 
-  .contentView3D {
-    width: 100%;
+
+  .mainContent{
+    padding: 0px 32px 0px 32px;
+  }
+
+  .mainContentSubText{
+    align-items:flex-start;
+    flex-direction: column;
   }
 
   .chipStyle {
@@ -502,10 +477,10 @@ h1{
   }
 
   .myHeader1{
-    font-size: 3em;
+    font-size: 2em;
   }
   .myHeader2{
-    font-size: 5em;
+    font-size: 3em;
   }
 }
 

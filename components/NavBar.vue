@@ -80,59 +80,6 @@ let showMobileToolBarNav:Boolean = false;
 let lastScrollPos: number = 0;
 let isScrollingDown: Boolean = false;
 
-const indexNavBarLinks = [
-  {
-    title:"Home",
-    action:"scrollToHome"
-  },
-  {
-    title:"Projects",
-    action:"scrollToProjekts"
-  },
-  {
-    title:"Try Out",
-    action:"scrollToTryouts"
-  },
-  {
-    title:"Socials",
-    action:"scrollToSocials"
-  },
-  {
-    title:"About Me",
-    action:"navigateTo:/aboutme"
-  },
-]
-
-const aboutMeNavBarLinks = [
-  {
-    title:"Home",
-    action:"navigateTo:/"
-  },
-  {
-    title:"Imprint",
-    action:"navigateTo:/aboutme"
-  },
-]
-
-
-// Methods
-
-const scrollToTryouts = () => {
-  emit("scrollToTryouts", "scroll")
-  //$root.emit("scrollToTryouts", "scroll");
-};
-const scrollToProjects = () => {
-  //$root.emit("scrollToProjekts", "scroll");
-};
-const scrollToSocials = () => {
-  //$root.emit("scrollToSocials", "scroll");
-};
-const scrollToHome = () => {
-  //$root.emit("scrollToHome", "scroll");
-};
-const scrollToStack = () => {
-  //$root.emit("scrollToStack", "scroll");
-};
 
 watch(
   () => props.navLinks,
@@ -155,6 +102,8 @@ const goTo = (actionName:string) => {
 
   // if the action starts with a "scrollTo"
   if(actionName.startsWith("scrollTo")){
+    const pageName = actionName.substring(actionName.indexOf(":")+1,actionName.length);
+    
     window.dispatchEvent(new Event(actionName))
   }
   else if(actionName.startsWith("navigateTo")){
@@ -186,6 +135,11 @@ const handleScroll = () => {
         "-100px":
         "0";
     lastScrollPos = window.scrollY;
+
+
+    if(navBarLinkHeight.value != "0px"){
+      navBarLinkHeight.value = "0px"
+    }
 }
 
 
@@ -375,13 +329,11 @@ nav{
 
 .headerMobile {
   width: 100vw;
-  height: 100px;
+  height: 80px;
   display: none;
   transition: 0.5s ease-out;
   transition-delay: 0.5s;
 }
-
-
 
 .navigation {
   display: flex;
@@ -438,7 +390,7 @@ nav{
   align-items: center;
   width:100vw;
   overflow:hidden;
-  box-shadow: 0px 5px 10px -5px rgb(97, 97, 97);
+  box-shadow: 0px 5px 10px -5px rgba(255, 255, 255, 0.399);
   transition: height 1.0s cubic-bezier(.03,1.12,.82,.99);
 }
 

@@ -6,12 +6,14 @@
         <div class="navigationItems" @click="$router.push('/aboutme')">About Me</div>
       </div>
       <div class="smallMargin">©Sebastian Tatar | sebi.tatar2@gmail.com</div>
-      <div class="smallMargin">2021</div>
+      <div class="smallMargin">2023</div>
     </footer>
 </template>
 
 <script setup lang="ts">
 import { onUpdated, ref, watch } from 'vue';
+
+const router = useRouter();
 
 let fixedToBottom = ref(false)
 
@@ -21,6 +23,15 @@ const props = defineProps({
     required: true
   }
 })
+
+watch(
+  () => router.currentRoute.value.name,
+  (newValue, oldValue) => {
+    console.log("Router change")
+    fixedToBottom.value = props.contentHeight > window.innerHeight
+  },
+  { deep: true },
+)
 
 onUpdated(() => {
   fixedToBottom.value = props.contentHeight > window.innerHeight
@@ -55,6 +66,7 @@ body {
   align-content: center;
   overflow: hidden;
   padding: 20px 0 20px 0;
+  width: 100vw;
 }
 
 .logo{
